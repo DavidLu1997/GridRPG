@@ -22,4 +22,11 @@ public class Monster extends Character {
 	{
 		return location.nextInShortestPath(player);
 	}
+	
+	//AI next move when hit by player
+	//Always attack for now
+	public int AIBattleNextMove(Player p)
+	{
+		return 1;
+	}
 }
