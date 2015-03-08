@@ -10,9 +10,12 @@ public class Player extends Character {
 	
 	public Role role;
 	
+	public final int maxLevel = 10;
+	
 	public Player(String name, int strength, int perception, int endurance, int charisma, int intelligence, int agility, int luck, Point location)
 	{
 		super(name, strength, perception, endurance, charisma, intelligence, agility, luck, location);
+		level = 1;
 	}
 	
 	public Player(String name, Point location, Role role)
@@ -20,16 +23,17 @@ public class Player extends Character {
 		this.role = role;
 		this.name = name;
 		this.location = location;
+		this.level = 1;
 		switch(this.role)
 		{
 		case Warrior:
-			setStrength(1);
-			setPerception(1);
-			setEndurance(1);
-			setCharisma(1);
-			setIntelligence(1);
-			setAgility(1);
-			setLuck(1);
+			setStrength(5);
+			setPerception(5);
+			setEndurance(5);
+			setCharisma(5);
+			setIntelligence(5);
+			setAgility(5);
+			setLuck(5);
 			break;
 		case Paladin:
 			setStrength(1);
@@ -89,6 +93,8 @@ public class Player extends Character {
 			break;
 			
 		}
+		
+		calculate();
 	}
 	
 	public void gainExp(double exp)

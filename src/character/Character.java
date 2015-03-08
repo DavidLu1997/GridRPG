@@ -34,7 +34,7 @@ public class Character {
 	
 	//Required per level
 	//Fill this out
-	protected final double[] expLevel = {1,2,3,4,5,6,7,8,9,10};
+	protected final double[] expLevel = {1,2,3,4,5,6,7,8,9,10,11};
 	
 	//SPECIAL stats
 	protected int strength;
