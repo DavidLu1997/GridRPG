@@ -241,6 +241,5 @@ public class Battle extends JFrame implements ActionListener{
 	public void exit()
 	{
 		setVisible(false);
-		//dispose();
 	}
 }
