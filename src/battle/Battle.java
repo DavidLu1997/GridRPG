@@ -199,7 +199,7 @@ public class Battle extends JFrame implements ActionListener{
 					//If player dead
 					if(hasEnded)
 					{
-						lastAction.setText(a.getName() + " has been slain.");
+						lastAction.setText(a.getName() + " has been killed.");
 						hpA.setText("HP: " + 0 + " / " + a.getMaxHp());
 					}
 					
