@@ -8,95 +8,38 @@ import java.util.ArrayList;
 //Inherits all methods from Character class
 public class Player extends Character {
 	
+	//Get role
 	public Role role;
 	
+	//Maximum level, preset
 	public final int maxLevel = 10;
 	
+	//Unused full constructor
 	public Player(String name, int strength, int perception, int endurance, int charisma, int intelligence, int agility, int luck, Point location)
 	{
 		super(name, strength, perception, endurance, charisma, intelligence, agility, luck, location);
 		level = 1;
 	}
 	
-	public Player(String name, Point location, Role role)
+	//Constructor given name and role
+	public Player(String name, Role role)
 	{
 		this.role = role;
+		this.location = new Point(0, 0);
 		this.name = name;
-		this.location = location;
 		this.level = 1;
-		switch(this.role)
-		{
-		case Warrior:
-			setStrength(5);
-			setPerception(5);
-			setEndurance(5);
-			setCharisma(5);
-			setIntelligence(5);
-			setAgility(5);
-			setLuck(5);
-			break;
-		case Paladin:
-			setStrength(1);
-			setPerception(1);
-			setEndurance(1);
-			setCharisma(1);
-			setIntelligence(1);
-			setAgility(1);
-			setLuck(1);
-			break;
-		case Hunter:
-			setStrength(1);
-			setPerception(1);
-			setEndurance(1);
-			setCharisma(1);
-			setIntelligence(1);
-			setAgility(1);
-			setLuck(1);
-			break;
-		case Rogue:
-			setStrength(1);
-			setPerception(1);
-			setEndurance(1);
-			setCharisma(1);
-			setIntelligence(1);
-			setAgility(1);
-			setLuck(1);
-			break;
-		case Priest:
-			setStrength(1);
-			setPerception(1);
-			setEndurance(1);
-			setCharisma(1);
-			setIntelligence(1);
-			setAgility(1);
-			setLuck(1);
-			break;
-		case Mage:
-			setStrength(1);
-			setPerception(1);
-			setEndurance(1);
-			setCharisma(1);
-			setIntelligence(1);
-			setAgility(1);
-			setLuck(1);
-			break;
-		case Monk:
-			setStrength(1);
-			setPerception(1);
-			setEndurance(1);
-			setCharisma(1);
-			setIntelligence(1);
-			setAgility(1);
-			setLuck(1);
-			break;
-		default:
-			break;
-			
-		}
+		setStrength(this.role.s);
+		setPerception(this.role.p);
+		setEndurance(this.role.e);
+		setCharisma(this.role.c);
+		setIntelligence(this.role.i);
+		setAgility(this.role.a);
+		setLuck(this.role.l);
 		
 		calculate();
 	}
 	
+	//Gain exp and check for level up
 	public void gainExp(double exp)
 	{
 		this.exp += exp;
@@ -107,8 +50,10 @@ public class Player extends Character {
 		}
 	}
 	
+	//Calculate visible locations to player, returns list of visible points
 	public ArrayList<Point> visibleLocations()
 	{
+		//Simple circle
 		ArrayList<Point> visible = new ArrayList<Point>();
 		for(int i = location.x - sightRadius; i <= location.x + sightRadius; i++)
 		{
@@ -121,6 +66,7 @@ public class Player extends Character {
 		return visible;
 	}
 	
+	//Check for level up
 	private void levelUp()
 	{
 		this.exp -= this.expLevel[this.level];
@@ -156,33 +102,6 @@ public class Player extends Character {
 			this.luck++;
 			break;
 		case Rogue:
-			this.strength++;
-			this.perception++;
-			this.endurance++;
-			this.charisma++;
-			this.intelligence++;
-			this.agility++;
-			this.luck++;
-			break;
-		case Priest:
-			this.strength++;
-			this.perception++;
-			this.endurance++;
-			this.charisma++;
-			this.intelligence++;
-			this.agility++;
-			this.luck++;
-			break;
-		case Mage:
-			this.strength++;
-			this.perception++;
-			this.endurance++;
-			this.charisma++;
-			this.intelligence++;
-			this.agility++;
-			this.luck++;
-			break;
-		case Monk:
 			this.strength++;
 			this.perception++;
 			this.endurance++;

@@ -24,15 +24,8 @@ public class Main {
 		//Initialize GUI
 		GUI gui = new GUI();
 		
-		//Get player name
-		gui.getName();
-		name = gui.name;
-		System.out.println("Your name is " + name);
-		
-		//Get player role
-		gui.getRole();
-		role = gui.role;
-		System.out.println("Your role is " + role);
+		//Start game
+		gui.start();
 		
 		//TODO Initialize grid
 		
