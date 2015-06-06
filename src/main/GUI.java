@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -23,12 +24,14 @@ import character.Role;
 public class GUI implements ActionListener {
 	
 	public String name;
-	public Role role = Role.Warrior;
+	public Role role = Role.Hunter;
 	public Player player;
 	
+	//Global variables
 	JFrame frame;
 	JTextField nameField;
 	ButtonGroup group;
+	ArrayList<JLabel> stats;
 	
 	//Get basic information
 	public void start() {
@@ -95,10 +98,31 @@ public class GUI implements ActionListener {
 		
 		pane2.add(radio, BorderLayout.CENTER);
 		
+		//Information Panel
+		JPanel pane3 = new JPanel();
+		pane3.setLayout(new BoxLayout(pane3, BoxLayout.PAGE_AXIS));
+		
+		JLabel info = new JLabel("Stats: ");
+		
+		stats = new ArrayList<JLabel>(7);
+		role.readStats();
+		stats.add(new JLabel("Strength - " + role.s));
+		stats.add(new JLabel("Perception - " + role.p));
+		stats.add(new JLabel("Endurance - " + role.e));
+		stats.add(new JLabel("Charisma - " + role.c));
+		stats.add(new JLabel("Intelligence - " + role.i));
+		stats.add(new JLabel("Agility - " + role.a));
+		stats.add(new JLabel("Luck - " + role.l));
+		
+		for(int i = 0; i < stats.size(); i++) {
+			pane3.add(stats.get(i));
+		}
+		
 		//Main panel
 		JPanel pane = new JPanel(new BorderLayout());
 		pane.add(pane1, BorderLayout.PAGE_START);
-		pane.add(pane2, BorderLayout.CENTER);
+		pane.add(pane2, BorderLayout.WEST);
+		pane.add(pane3, BorderLayout.EAST);
 		
 		//Button
 		JButton start = new JButton("Start");
@@ -125,6 +149,20 @@ public class GUI implements ActionListener {
 			System.out.println("Your role is " + role);
 			player = new Player(name, role);
 			frame.dispose();
+			break;
+		default:
+			this.role = role.reverse(group.getSelection().getActionCommand());
+			System.out.println(role + " role selected.");
+			role.readStats();
+			stats.get(0).setText("Strength - " + role.s);
+			stats.get(1).setText("Perception - " + role.p);
+			stats.get(2).setText("Endurance - " + role.e);
+			stats.get(3).setText("Charisma - " + role.c);
+			stats.get(4).setText("Intelligence - " + role.i);
+			stats.get(5).setText("Agility - " + role.a);
+			stats.get(6).setText("Luck - " + role.l);
+			frame.revalidate();
+			frame.repaint();
 			break;
 		}
 	}
