@@ -1,11 +1,14 @@
 package main;
 
+import grid.Grid;
 import grid.Point;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -21,7 +24,7 @@ import character.Player;
 import character.Role;
 
 //GUI Class, contains most GUI components
-public class GUI implements ActionListener {
+public class GUI implements ActionListener, KeyListener {
 	
 	public String name;
 	public Role role = Role.Hunter;
@@ -32,6 +35,7 @@ public class GUI implements ActionListener {
 	JTextField nameField;
 	ButtonGroup group;
 	ArrayList<JLabel> stats;
+	Grid grid;
 	
 	//Booleans for condition
 	boolean started = false;
@@ -139,10 +143,65 @@ public class GUI implements ActionListener {
 		frame.pack();
 		frame.setVisible(true);
 	}
+	
+	//Game begins
+	public void gameBegin() {
+		//JFrame
+		frame = new JFrame("GridRPG: " + player.getName());
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//Main panel
+		JPanel pane = new JPanel(new BorderLayout());
+		
+		//Information panel
+		JPanel infoPanel = new JPanel();
+		
+		//Information label
+		JLabel info = new JLabel("Player information here");
+		infoPanel.add(info);
+		
+		pane.add(infoPanel, BorderLayout.PAGE_START);
+		
+		//Grid
+		grid = new Grid(player);
+		grid.setPreferredSize(new Dimension(grid.gridX*grid.sizeX, grid.gridY*grid.sizeY));
+		grid.addKeyListener(this);
+		grid.setFocusable(true);
+		pane.add(grid, BorderLayout.CENTER);
+		
+		//Buttons Panel
+		JPanel buttons = new JPanel();
+		
+		//Restart button
+		JButton restart = new JButton("Restart");
+		restart.setActionCommand("restart");
+		restart.addActionListener(this);
+		buttons.add(restart);
+		
+		//Reset button
+		JButton reset = new JButton("Reset");
+		reset.setActionCommand("reset");
+		reset.addActionListener(this);
+		buttons.add(reset);
+		
+		//Exit button
+		JButton exit = new JButton("Exit");
+		exit.setActionCommand("exit");
+		exit.addActionListener(this);
+		buttons.add(exit);
+		
+		pane.add(buttons, BorderLayout.PAGE_END);
+		
+		//Show frame
+		frame.setContentPane(pane);
+		frame.pack();
+		frame.setVisible(true);
+	}
 
 	//ActionListener
 	public void actionPerformed(ActionEvent e) {
-		if(started) {
+		//Still on start menu
+		if(!started) {
 			switch(e.getActionCommand())
 			{
 			//Start button
@@ -154,7 +213,9 @@ public class GUI implements ActionListener {
 				player = new Player(name, role);
 				frame.dispose();
 				started = true;
+				gameBegin();
 				break;
+			//Change role selection
 			default:
 				this.role = role.reverse(group.getSelection().getActionCommand());
 				System.out.println(role + " role selected.");
@@ -171,8 +232,51 @@ public class GUI implements ActionListener {
 				break;
 			}
 		}
+		//In game
 		else {
 			
 		}
+	}
+	
+	public void keyPressed(KeyEvent e) {
+		if(started){
+			switch(e.getKeyCode())
+			{
+			//Move up 1
+			case KeyEvent.VK_W:
+				player.location.y = Integer.max(0, player.location.y - 1);
+				break;
+			case KeyEvent.VK_S:
+				player.location.y = Integer.min(grid.sizeY-1, player.location.y + 1);
+				break;
+			case KeyEvent.VK_A:
+				player.location.x = Integer.max(0, player.location.x - 1);
+				break;
+			case KeyEvent.VK_D:
+				player.location.x = Integer.min(grid.sizeX-1, player.location.x + 1);
+				break;
+			}
+			
+			frame.repaint();
+			
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

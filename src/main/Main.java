@@ -26,10 +26,6 @@ public class Main {
 		
 		//Start game
 		gui.start();
-		
-		//TODO Initialize grid
-		
-		//TODO Initialize monsters
 	}
 		
 }

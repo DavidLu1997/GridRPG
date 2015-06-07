@@ -16,10 +16,10 @@ public class Tile {
 		
 		try
 		{
-			img = ImageIO.read(new File(type.getImageName()));
+			img = ImageIO.read(new File("images/" + type.getImageName()));
 		}
 			catch(IOException e){
-				System.out.println("Image" + type.getImageName() + ".png" + " not found.");
+				System.out.println("Image " + "images/" + type.getImageName() + " not found.");
 		}
 	}
 }

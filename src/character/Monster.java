@@ -10,8 +10,9 @@ import grid.Point;
 public class Monster extends Character {
 	
 	private int expGained;
+	private MonsterType type;
 	
-	public Monster(MonsterType monster, Point location)
+	public Monster(MonsterType monster)
 	{
 		//Get stats
 		monster.readStats();
@@ -25,9 +26,10 @@ public class Monster extends Character {
 		this.luck = monster.l;
 		this.expGained = monster.exp;
 		this.level = monster.lvl;
+		this.type = monster;
 		
 		//Get location
-		this.location = location;
+		this.location = new Point(0, 0);
 		
 		//Read image file
 		try
@@ -40,5 +42,10 @@ public class Monster extends Character {
 		
 		//Calculate stats
 		this.calculate();
+	}
+	
+	public Monster clone()
+	{
+		return new Monster(type);
 	}
 }

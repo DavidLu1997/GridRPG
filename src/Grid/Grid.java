@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import character.Character;
+import character.Monster;
+import character.MonsterList;
 import character.Player;
 import item.Item;
 
@@ -31,24 +32,33 @@ public class Grid extends JPanel {
 	//Grid tiles
 	public ArrayList<ArrayList<Tile>> grid;
 	
-	//Characters on the grid
-	public ArrayList<ArrayList<Character>> characters;
+	//Monsters on the grid
+	public ArrayList<ArrayList<Monster>> monsters;
 	
 	//The Player
 	public Player player;
 	
+	//Monster List
+	public MonsterList list;
+	
 	//Standard initialization
 	public Grid(Player player) {
 		this.grid = new ArrayList<ArrayList<Tile>>();
-		this.characters = new ArrayList<ArrayList<Character>>();
+		this.monsters = new ArrayList<ArrayList<Monster>>();
 		this.player = player;
+		this.list = new MonsterList();
+		
+		//Get randomized board
+		randomGrid();
+		randomMonsters(Integer.max(player.getLevel()-1, 1), Integer.min(player.getLevel(), player.maxLevel), player.getLevel() * 4);
 	}
 	
 	//Custom constructor, unused
-	public Grid(ArrayList<ArrayList<Tile> > grid, ArrayList<ArrayList<Character> > characters, Player player) {
+	public Grid(ArrayList<ArrayList<Tile> > grid, ArrayList<ArrayList<Monster> > monsters, Player player) {
 		this.grid = grid;
-		this.characters = characters;
+		this.monsters = monsters;
 		this.player = player;
+		this.list = new MonsterList();
 	}
 	
 	//Generate random grid of tiles
@@ -68,13 +78,46 @@ public class Grid extends JPanel {
 		}
 	}
 	
-	//Construct grid of random monsters given number, min level, and max level
-	public void randomCharacters(int numMonster, int minLevel, int maxLevel) {
+	//Construct grid of random monsters given min level, max level, and total level
+	public void randomMonsters(int minLevel, int maxLevel, int total) {
 		//Clear existing
-		characters.clear();
+		monsters.clear();
 		
-	
+		//Add nulls
+		for(int i = 0; i < sizeX; i++) {
+			monsters.add(new ArrayList<Monster>());
+			for(int j = 0; j < sizeY; j++) {
+				monsters.get(i).add(null);
+			}
+		}
 		
+		//Get valid monsters
+		ArrayList<Monster> validMonsters = list.validMonster(minLevel, maxLevel);
+		
+		int count = 0;
+		int rand = 0, x = 0, y = 0;
+		
+		//Choose monsters
+		//TODO Make random better
+		while(count <= total) {
+			//Get index of monster
+			rand = (int)(Math.random() * validMonsters.size());
+			
+			//Get x coordinate
+			x = (int)(Math.random() * sizeX);
+			while(x == player.location.x)
+				x = (int)(Math.random() * sizeX);
+			
+			//Get y coordinate
+			y = (int)(Math.random() * sizeY);
+			while(y == player.location.y)
+				y = (int)(Math.random() * sizeY);
+			
+			//Add monster
+			monsters.get(x).set(y, validMonsters.get(rand).clone());
+			
+			count += validMonsters.get(rand).getLevel();
+		}
 	}
 	
 	//Repaint
@@ -93,10 +136,14 @@ public class Grid extends JPanel {
 		//Get visible locations
 		ArrayList<Point> visible = player.visibleLocations();
 		
-		//Draw tiles and characters visible to player
+		//Draw tiles and monsters visible to player
 		for(int i = 0; i < visible.size(); i++) {
-			g.drawImage(grid.get(visible.get(i).x).get(visible.get(i).y).img, visible.get(i).x * gridX, visible.get(i).y * gridY, null);
-			g.drawImage(characters.get(visible.get(i).x).get(visible.get(i).y).img, visible.get(i).x * gridX, visible.get(i).y * gridY, null);
+			//Only draw if valid
+			if(visible.get(i).x >= 0 && visible.get(i).x < sizeX && visible.get(i).y >= 0 && visible.get(i).y < sizeY){
+				g.drawImage(grid.get(visible.get(i).x).get(visible.get(i).y).img, visible.get(i).x * gridX, visible.get(i).y * gridY, null);
+			if(monsters.get(visible.get(i).x).get(visible.get(i).y)!=null&&monsters.get(visible.get(i).x).get(visible.get(i).y).img != null)
+				g.drawImage(monsters.get(visible.get(i).x).get(visible.get(i).y).img, visible.get(i).x * gridX, visible.get(i).y * gridY, null);
+			}
 		}
 		
 		//Draw player

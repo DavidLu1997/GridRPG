@@ -190,6 +190,7 @@ public class Battle extends JFrame implements ActionListener{
 		else if(!turn)
 		{
 			//Monster always attacks
+			/*
 			switch(b.AIBattleNextMove(a))
 			{
 				//Attacks
@@ -216,7 +217,7 @@ public class Battle extends JFrame implements ActionListener{
 					lastAction.setText(b.getName() + " has healed for " + healed + ".");
 					hpB.setText("HP: " + b.getHp() + " / " + b.getMaxHp());
 					break;
-			}
+			}*/
 			
 			//Set buttons
 			attackA.setEnabled(true);

@@ -2,7 +2,11 @@ package character;
 
 import grid.Point;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 //Main Player Class
 //Inherits all methods from Character class
@@ -39,6 +43,14 @@ public class Player extends Character {
 		setIntelligence(this.role.i);
 		setAgility(this.role.a);
 		setLuck(this.role.l);
+		
+		try
+		{
+			img = ImageIO.read(new File("roles/" + role + ".png"));
+		}
+			catch(IOException e){
+				System.out.println("Image " + "roles/" + role + ".png" + " not found.");
+		}
 		
 		calculate();
 	}

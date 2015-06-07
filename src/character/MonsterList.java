@@ -1,5 +1,7 @@
 package character;
 
+import grid.Point;
+
 import java.util.ArrayList;
 
 public class MonsterList {
@@ -7,31 +9,30 @@ public class MonsterList {
 	//Level difference between player and monster
 	public final int levelRange = 1;
 	
-	public ArrayList<Monster> list = new ArrayList<Monster>();
+	public ArrayList<Monster> list;
 	
 	public MonsterList()
 	{
-		//TODO Read all monsters
+		list = new ArrayList<Monster>();
+		list.add(new Monster(MonsterType.Dog));
+		list.add(new Monster(MonsterType.Horse));
+		list.add(new Monster(MonsterType.Moose));
+		list.add(new Monster(MonsterType.Wolf));
+		list.add(new Monster(MonsterType.Bear));
+		list.add(new Monster(MonsterType.Elephant));
 	}
 	
-	//Returns the next monster to be fought
-	public Monster nextMonster(int level)
-	{
-		ArrayList<Monster> temp = new ArrayList<Monster>();
+	//Returns list of valid monsters
+	public ArrayList<Monster> validMonster(int minLevel, int maxLevel) {
+		ArrayList<Monster> l = new ArrayList<Monster>();
 		
-		//Find all valid monsters
-		for(int i = 0; i < list.size(); i++)
-		{
-			if(list.get(i).level <= level + levelRange && list.get(i).level >= level - levelRange)
-			{
-				temp.add(list.get(i).clone());
+		for(int i = 0; i < list.size(); i++) {
+			if(list.get(i).level >= minLevel && list.get(i).level <= maxLevel) {
+				l.add(list.get(i).clone());
 			}
 		}
 		
-		//Return random valid monster
-		if(temp.size() > 0)
-			return temp.get((int)(Math.random()*temp.size()));
-		else
-			return list.get((int)(Math.random()*list.size()));
+		return l;
 	}
+	
 }

@@ -59,24 +59,6 @@ public class Character {
 	//Default constructor
 	public Character()
 	{
-		this.strength = 1;
-		this.perception = 1;
-		this.endurance = 1;
-		this.charisma = 1;
-		this.intelligence = 1;
-		this.agility = 1;
-		this.luck = 1;
-		this.name = "";
-		this.location = new Point();
-		try
-		{
-			img = ImageIO.read(new File(name+".png"));
-		}
-			catch(IOException e){
-				System.out.println("Image " + name + ".png" + " not found.");
-		}
-		
-		calculate();
 	}
 	
 	//Custom constructor
@@ -92,14 +74,6 @@ public class Character {
 		this.luck = luck;
 		this.location = location;
 		
-		try
-		{
-			img = ImageIO.read(new File(name+".png"));
-		}
-			catch(IOException e){
-				System.out.println("Image " + name + ".png" + " not found.");
-		}
-		
 		calculate();
 	}
 	
@@ -111,7 +85,7 @@ public class Character {
 		criticalDamage = strength * 4;
 		maxHp = endurance * 10;
 		hp = maxHp;
-		sightRadius = perception * 2;
+		sightRadius = (int) (perception * 0.75);
 		accuracy = perception / 10.0 + 0.4;
 		resistance = endurance / 20.0;
 		criticalChance = luck / 100.0;

@@ -8,8 +8,6 @@ import java.io.IOException;
 import grid.Point;
 
 public enum MonsterType {
-	Grasshopper,
-	Rabbit,
 	Dog,
 	Horse,
 	Moose,
@@ -41,9 +39,9 @@ public enum MonsterType {
 			l = (int)Integer.parseInt(br.readLine());
 			System.out.println("L: " + l);
 			exp = (int)Integer.parseInt(br.readLine());
-			System.out.println("Experience: " + l);
+			System.out.println("Experience: " + exp);
 			lvl = (int)Integer.parseInt(br.readLine());
-			System.out.println("Level: " + l);
+			System.out.println("Level: " + lvl);
 		} catch (FileNotFoundException e) {
 			System.out.println("Reading " + "monsters/" + this.toString().toLowerCase() + ".txt");
 		} catch (NumberFormatException e) {
@@ -57,10 +55,6 @@ public enum MonsterType {
 	
 	public String toString() {
 		switch(this) {
-		case Grasshopper:
-			return "Grasshopper";
-		case Rabbit:
-			return "Rabbit";
 		case Dog:
 			return "Dog";
 		case Horse:
@@ -80,10 +74,6 @@ public enum MonsterType {
 	
 	public MonsterType reverse(String s) {
 		switch(s) {
-		case "Grasshopper":
-			return Grasshopper;
-		case "Rabbit":
-			return Rabbit;
 		case "Dog":
 			return Dog;
 		case "Horse":
@@ -97,7 +87,11 @@ public enum MonsterType {
 		case "Elephant":
 			return Elephant;
 		default:
-			return Grasshopper;
+			return Dog;
 		}
+	}
+	
+	public int numMonsters() {
+		return 6;
 	}
 }
