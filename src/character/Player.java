@@ -75,7 +75,8 @@ public class Player extends Character {
 		{
 			for(int j = location.y - sightRadius; j <= location.y + sightRadius; j++)
 			{
-				visible.add(new Point(i, j));
+				if(location.shortestDistance(new Point(i, j)) < sightRadius)
+					visible.add(new Point(i, j));
 			}
 		}
 		
