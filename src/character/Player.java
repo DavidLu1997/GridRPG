@@ -8,6 +8,10 @@ import java.util.ArrayList;
 //Inherits all methods from Character class
 public class Player extends Character {
 	
+	//Player starting coordinates
+	private final int startX = 8;
+	private final int startY = 8;
+	
 	//Get role
 	public Role role;
 	
@@ -25,7 +29,7 @@ public class Player extends Character {
 	public Player(String name, Role role)
 	{
 		this.role = role;
-		this.location = new Point(8, 8);
+		this.location = new Point(startX, startY);
 		this.name = name;
 		this.level = 1;
 		setStrength(this.role.s);
