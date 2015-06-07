@@ -16,8 +16,8 @@ public class Grid extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public final int gridX = 10;
-	public final int gridY = 10;
+	public final int gridX = 40;
+	public final int gridY = 40;
 	
 	//Grid tiles
 	public ArrayList<ArrayList<Tile>> grid;
@@ -28,22 +28,18 @@ public class Grid extends JPanel{
 	//The Player
 	public Player player;
 	
-	//Items on the grid
-	//DOES JACK SHIT
-	public ArrayList<ArrayList<Item>> items;
-	
-	public Grid()
+	public Grid(Player p)
 	{
 		grid = new ArrayList<ArrayList<Tile>>();
 		characters = new ArrayList<ArrayList<Character>>();
-		items = new ArrayList<ArrayList<Item>>();
+		player = p;
 	}
 	
-	public Grid(ArrayList<ArrayList<Tile> > grid, ArrayList<ArrayList<Character> > characters, ArrayList<ArrayList<Item> > items)
+	public Grid(ArrayList<ArrayList<Tile> > grid, ArrayList<ArrayList<Character> > characters, Player player)
 	{
 		this.grid = grid;
 		this.characters = characters;
-		this.items = items;
+		this.player = player;
 	}
 	
 	public void paint(Graphics g)
@@ -57,7 +53,6 @@ public class Grid extends JPanel{
 				y = j * gridY;
 				
 				g.drawImage(grid.get(i).get(j).img, x, y, null);
-				g.drawImage(items.get(i).get(j).img, x, y, null);
 			}
 		}
 		

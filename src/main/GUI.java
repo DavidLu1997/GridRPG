@@ -33,6 +33,9 @@ public class GUI implements ActionListener {
 	ButtonGroup group;
 	ArrayList<JLabel> stats;
 	
+	//Booleans for condition
+	boolean started = false;
+	
 	//Get basic information
 	public void start() {
 		
@@ -106,13 +109,13 @@ public class GUI implements ActionListener {
 		
 		stats = new ArrayList<JLabel>(7);
 		role.readStats();
-		stats.add(new JLabel("Strength - " + role.s));
-		stats.add(new JLabel("Perception - " + role.p));
-		stats.add(new JLabel("Endurance - " + role.e));
-		stats.add(new JLabel("Charisma - " + role.c));
-		stats.add(new JLabel("Intelligence - " + role.i));
-		stats.add(new JLabel("Agility - " + role.a));
-		stats.add(new JLabel("Luck - " + role.l));
+		stats.add(new JLabel("Strength: " + role.s));
+		stats.add(new JLabel("Perception: " + role.p));
+		stats.add(new JLabel("Endurance: " + role.e));
+		stats.add(new JLabel("Charisma: " + role.c));
+		stats.add(new JLabel("Intelligence: " + role.i));
+		stats.add(new JLabel("Agility: " + role.a));
+		stats.add(new JLabel("Luck: " + role.l));
 		
 		for(int i = 0; i < stats.size(); i++) {
 			pane3.add(stats.get(i));
@@ -139,31 +142,37 @@ public class GUI implements ActionListener {
 
 	//ActionListener
 	public void actionPerformed(ActionEvent e) {
-		switch(e.getActionCommand())
-		{
-		//Start button
-		case "start":
-			this.name = nameField.getText();
-			this.role = role.reverse(group.getSelection().getActionCommand());
-			System.out.println("Your name is " + name);
-			System.out.println("Your role is " + role);
-			player = new Player(name, role);
-			frame.dispose();
-			break;
-		default:
-			this.role = role.reverse(group.getSelection().getActionCommand());
-			System.out.println(role + " role selected.");
-			role.readStats();
-			stats.get(0).setText("Strength - " + role.s);
-			stats.get(1).setText("Perception - " + role.p);
-			stats.get(2).setText("Endurance - " + role.e);
-			stats.get(3).setText("Charisma - " + role.c);
-			stats.get(4).setText("Intelligence - " + role.i);
-			stats.get(5).setText("Agility - " + role.a);
-			stats.get(6).setText("Luck - " + role.l);
-			frame.revalidate();
-			frame.repaint();
-			break;
+		if(started) {
+			switch(e.getActionCommand())
+			{
+			//Start button
+			case "start":
+				this.name = nameField.getText();
+				this.role = role.reverse(group.getSelection().getActionCommand());
+				System.out.println("Your name is " + name);
+				System.out.println("Your role is " + role);
+				player = new Player(name, role);
+				frame.dispose();
+				started = true;
+				break;
+			default:
+				this.role = role.reverse(group.getSelection().getActionCommand());
+				System.out.println(role + " role selected.");
+				role.readStats();
+				stats.get(0).setText("Strength: " + role.s);
+				stats.get(1).setText("Perception: " + role.p);
+				stats.get(2).setText("Endurance: " + role.e);
+				stats.get(3).setText("Charisma: " + role.c);
+				stats.get(4).setText("Intelligence: " + role.i);
+				stats.get(5).setText("Agility: " + role.a);
+				stats.get(6).setText("Luck: " + role.l);
+				frame.revalidate();
+				frame.repaint();
+				break;
+			}
+		}
+		else {
+			
 		}
 	}
 }

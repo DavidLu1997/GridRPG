@@ -25,7 +25,7 @@ public class Player extends Character {
 	public Player(String name, Role role)
 	{
 		this.role = role;
-		this.location = new Point(0, 0);
+		this.location = new Point(8, 8);
 		this.name = name;
 		this.level = 1;
 		setStrength(this.role.s);
