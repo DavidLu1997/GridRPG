@@ -13,6 +13,7 @@ public enum Role {
 	public void readStats() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("roles/" + this.toString().toLowerCase() + ".txt"));
+			System.out.println("Reading " + "roles/" + this.toString().toLowerCase() + ".txt");
 			s = (int)Integer.parseInt(br.readLine());
 			System.out.println("S: " + s);
 			p = (int)Integer.parseInt(br.readLine());

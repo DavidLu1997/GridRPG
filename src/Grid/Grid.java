@@ -68,11 +68,12 @@ public class Grid extends JPanel {
 		}
 	}
 	
-	//Construct grid of random characters
-	public void randomCharacters() {
+	//Construct grid of random monsters given number, min level, and max level
+	public void randomCharacters(int numMonster, int minLevel, int maxLevel) {
 		//Clear existing
 		characters.clear();
 		
+	
 		
 	}
 	
