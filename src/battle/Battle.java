@@ -2,10 +2,12 @@ package battle;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,38 +34,11 @@ public class Battle extends JFrame implements ActionListener{
 	//Panel
 	private JPanel panel;
 	
-	//Who's turn it is
-	private boolean turn;
+	//Top panel
+	private JPanel top;
 	
-	//Is someone dead?
-	private boolean hasEnded;
-	
-	//Name of Player
-	private JLabel nameA;
-	
-	//Name of Monster
-	private JLabel nameB;
-	
-	//HP of Player
-	private JLabel hpA;
-	
-	//HP of Monster
-	private JLabel hpB;
-	
-	//Attack button
-	private JButton attackA;
-	
-	//Heal button
-	private JButton healA;
-	
-	//Run button
-	private JButton runA;
-	
-	//Continue button
-	private JButton end;
-	
-	//Last Action line
-	private JLabel lastAction;
+	//Stats panels
+	private JPanel statsA, statsB;
 	
 	//Battle between player and monster
 	public Battle(Player a, Monster b)
@@ -89,6 +64,26 @@ public class Battle extends JFrame implements ActionListener{
 		this.panel = new JPanel();
 		this.panel.setLayout(new BorderLayout());
 		
+		//Initialize top
+		top = new JPanel(new FlowLayout());
+		
+		//Add image of player
+		top.add(new JLabel(new ImageIcon(a.img)));
+		
+		//Add label of player
+		top.add(new JLabel(a.getName()));
+		
+		//Add vs
+		top.add(new JLabel(" vs. "));
+		
+		//Add label of monster
+		top.add(new JLabel(b.getName()));
+		
+		//Add image of monster
+		top.add(new JLabel(new ImageIcon(b.img)));
+		
+		//Add top to panel
+		panel.add(top, BorderLayout.PAGE_START);
 		
 		this.getContentPane().add(panel);
 		this.repaint();
