@@ -50,8 +50,6 @@ public class Battle extends JFrame implements ActionListener{
 		this.setTitle(a.getName() + " vs " + b.getName());
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setSize(300, 200);
-		turn = true;
-		hasEnded = false;
 		
 		//Start
 		start();
@@ -85,8 +83,37 @@ public class Battle extends JFrame implements ActionListener{
 		//Add top to panel
 		panel.add(top, BorderLayout.PAGE_START);
 		
+		//Update statistics
+		updateStats();
+		
+		panel.add(statsA, BorderLayout.WEST);
+		panel.add(statsB, BorderLayout.EAST);
+		
 		this.getContentPane().add(panel);
 		this.repaint();
+	}
+	
+	//Update statistic displays
+	public void updateStats()
+	{
+		a.calculate();
+		statsA = new JPanel();
+		statsA.setLayout(new BoxLayout(statsA, BoxLayout.Y_AXIS));
+		
+		statsA.add(new JLabel("HP: " + a.getHp() + "/" + a.getMaxHp()));
+		statsA.add(new JLabel("MP: " + a.getMp() + "/" + a.getMaxMp()));
+		statsA.add(new JLabel("Damage: " + a.getMinDamage() + "-" + a.getMaxDamage()));
+		statsA.add(new JLabel("Critical Damage: " + a.getCriticalDamage()));
+		statsA.add(new JLabel("Critical Change: " + a.getCriticalChance()));
+		statsA.add(new JLabel("Accuracy: " + a.getAccuracy() * 100 + " %"));
+		statsA.add(new JLabel("Resistance: " + a.getResistance() * 100 + "%"));
+		
+		
+		statsB = new JPanel();
+		statsB.setLayout(new BoxLayout(statsB, BoxLayout.Y_AXIS));
+		
+		statsB.add(new JLabel("HP: " + b.getHp() + "/" + b.getMaxHp()));
+		statsB.add(new JLabel("MP: " + b.getMp() + "/" + b.getMaxMp()));
 	}
 
 	//Actionlistener
