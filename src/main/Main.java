@@ -10,6 +10,7 @@ import battle.Battle;
 import grid.Point;
 import character.Monster;
 import character.MonsterList;
+import character.MonsterType;
 import character.Player;
 import character.Role;
 
@@ -26,6 +27,8 @@ public class Main {
 		
 		//Start game
 		gui.start();
+		
+		Battle b = new Battle(new Player("Derp", Role.Hunter), new Monster(MonsterType.Bear));
 	}
 		
 }

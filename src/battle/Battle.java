@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import character.Character;
 import character.Monster;
@@ -39,6 +40,12 @@ public class Battle extends JFrame implements ActionListener{
 	
 	//Stats panels
 	private JPanel statsA, statsB;
+	
+	//Message panel
+	private JPanel bottom;
+	
+	//Message label
+	private JLabel msg;
 	
 	//Battle between player and monster
 	public Battle(Player a, Monster b)
@@ -81,13 +88,23 @@ public class Battle extends JFrame implements ActionListener{
 		top.add(new JLabel(new ImageIcon(b.img)));
 		
 		//Add top to panel
-		panel.add(top, BorderLayout.PAGE_START);
+		panel.add(top, BorderLayout.NORTH);
 		
 		//Update statistics
 		updateStats();
 		
+		//Message panel
+		bottom = new JPanel();
+		bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
+		
+		//Add message
+		msg = new JLabel("The battle has just begun.");
+		bottom.setAlignmentX(CENTER_ALIGNMENT);
+		bottom.add(msg);
+		
 		panel.add(statsA, BorderLayout.WEST);
 		panel.add(statsB, BorderLayout.EAST);
+		panel.add(bottom, BorderLayout.SOUTH);
 		
 		this.getContentPane().add(panel);
 		this.repaint();
@@ -96,6 +113,7 @@ public class Battle extends JFrame implements ActionListener{
 	//Update statistic displays
 	public void updateStats()
 	{
+		//Add stats of A
 		a.calculate();
 		statsA = new JPanel();
 		statsA.setLayout(new BoxLayout(statsA, BoxLayout.Y_AXIS));
@@ -108,7 +126,8 @@ public class Battle extends JFrame implements ActionListener{
 		statsA.add(new JLabel("Accuracy: " + a.getAccuracy() * 100 + " %"));
 		statsA.add(new JLabel("Resistance: " + a.getResistance() * 100 + "%"));
 		
-		
+		//Add stats of B
+		b.calculate();
 		statsB = new JPanel();
 		statsB.setLayout(new BoxLayout(statsB, BoxLayout.Y_AXIS));
 		
