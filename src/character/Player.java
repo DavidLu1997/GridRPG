@@ -53,6 +53,7 @@ public class Player extends Character {
 		}
 		
 		calculate();
+		refresh();
 	}
 	
 	//Gain exp and check for level up

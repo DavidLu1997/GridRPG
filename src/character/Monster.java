@@ -42,6 +42,7 @@ public class Monster extends Character {
 		
 		//Calculate stats
 		this.calculate();
+		this.refresh();
 	}
 	
 	public Monster clone()

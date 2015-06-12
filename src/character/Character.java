@@ -22,12 +22,6 @@ public class Character {
 	//Location
 	public Point location;
 	
-	//Physical
-	protected int hp;
-	protected int maxHp;
-	protected int mp;
-	protected int maxMp;
-	
 	//Experience
 	protected double exp;
 	protected int level;
@@ -46,15 +40,23 @@ public class Character {
 	protected int luck;
 	
 	//Derived Statistics
-	protected int minDamage;
-	protected int maxDamage;
-	protected int criticalDamage;
-	protected int sightRadius;
-	protected double accuracy;
-	protected double resistance;
-	protected double criticalChance;
-	protected int carryWeight;
-	protected int regenPerTurn;
+	protected int hp; //Current health points
+	protected int maxHp; //Maximum health points
+	protected int mp; //Current mana points
+	protected int maxMp; //Maximum mana points
+	protected int minDamage; //Minimum damage
+	protected int maxDamage; //Maximum damage
+	protected int criticalDamage; //Critical damage
+	protected int magicDamage; //Magic damage
+	protected int sightRadius; //Sight radius
+	protected double accuracy; //Accuracy
+	protected double magicAccuracy; //Magic accuracy
+	protected double resistance; //Resistance
+	protected double criticalChance; //Critical chance
+	protected double nerve;
+	protected int carryWeight; //Carrying capacity
+	protected int healthRegenPerTurn; //Health regenerated per turn
+	protected int manaRegenPerTurn; //Mana regenerated per turn
 	
 	//Default constructor
 	public Character()
@@ -83,17 +85,28 @@ public class Character {
 		minDamage = strength / 2;
 		maxDamage = strength * 2;
 		criticalDamage = strength * 4;
+		magicDamage = intelligence * 2;
 		maxHp = endurance * 10;
-		hp = maxHp;
+		maxMp = intelligence * 5;
 		sightRadius = (int) (perception * 0.75);
-		accuracy = perception / 10.0 + 0.4;
-		resistance = endurance / 20.0;
+		accuracy = Double.min(perception / 20.0, 0.9);
+		magicAccuracy = Double.min(intelligence / 10.0, 0.9);
+		resistance = Double.min(endurance / 20.0, 0.9);
 		criticalChance = luck / 100.0;
-		carryWeight = strength * 10 + 150; 
-		regenPerTurn = strength;
+		nerve = charisma / 100.0;
+		carryWeight = strength * 10 + 50; 
+		healthRegenPerTurn = 0;
+		manaRegenPerTurn = intelligence;
 	}
 	
-	//Attacking function
+	//Refresh health and mana
+	public void refresh()
+	{
+		hp = maxHp;
+		mp = maxMp;
+	}
+	
+	//Regular attack
 	public int attack()
 	{
 		//Minimum damage done
@@ -111,25 +124,25 @@ public class Character {
 		//If "miss" or "fumble"
 		else if(Math.random() >= accuracy)
 		{
-			damage = 1;
+			damage = -1;
 		}
 		
 		return damage;
 	}
 	
-	//Heal
-	public int heal()
+	//Magic attack
+	public int magicAttack()
 	{
-		//Heals for regenPerTurn
-		hp += regenPerTurn;
-		
-		//Cap at max health
-		if(hp > maxHp)
+		//Magic attack damage
+		int damage = magicDamage;
+				
+		//If "miss" or "fumble"
+		if(Math.random() >= magicAccuracy)
 		{
-			hp = maxHp;
+			damage = -1;
 		}
-		
-		return regenPerTurn;
+				
+		return damage;
 	}
 	
 	//Defend against damage
@@ -357,11 +370,43 @@ public class Character {
 		this.maxMp = maxMp;
 	}
 
-	public int getRegenPerTurn() {
-		return regenPerTurn;
+	public double getNerve() {
+		return nerve;
 	}
 
-	public void setRegenPerTurn(int regenPerTurn) {
-		this.regenPerTurn = regenPerTurn;
+	public void setNerve(double nerve) {
+		this.nerve = nerve;
+	}
+
+	public int getHealthRegenPerTurn() {
+		return healthRegenPerTurn;
+	}
+
+	public void setHealthRegenPerTurn(int healthRegenPerTurn) {
+		this.healthRegenPerTurn = healthRegenPerTurn;
+	}
+
+	public int getManaRegenPerTurn() {
+		return manaRegenPerTurn;
+	}
+
+	public void setManaRegenPerTurn(int manaRegenPerTurn) {
+		this.manaRegenPerTurn = manaRegenPerTurn;
+	}
+
+	public int getMagicDamage() {
+		return magicDamage;
+	}
+
+	public void setMagicDamage(int magicDamage) {
+		this.magicDamage = magicDamage;
+	}
+
+	public double getMagicAccuracy() {
+		return magicAccuracy;
+	}
+
+	public void setMagicAccuracy(double magicAccuracy) {
+		this.magicAccuracy = magicAccuracy;
 	}
 }

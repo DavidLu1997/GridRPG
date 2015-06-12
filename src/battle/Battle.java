@@ -2,6 +2,7 @@ package battle;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,7 +57,7 @@ public class Battle extends JFrame implements ActionListener{
 		//Make JFrame
 		this.setTitle(a.getName() + " vs " + b.getName());
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setSize(300, 200);
+		this.setSize(400, 300);
 		
 		//Start
 		start();
@@ -118,12 +119,16 @@ public class Battle extends JFrame implements ActionListener{
 		statsA = new JPanel();
 		statsA.setLayout(new BoxLayout(statsA, BoxLayout.Y_AXIS));
 		
+		//Add all stats
 		statsA.add(new JLabel("HP: " + a.getHp() + "/" + a.getMaxHp()));
 		statsA.add(new JLabel("MP: " + a.getMp() + "/" + a.getMaxMp()));
 		statsA.add(new JLabel("Damage: " + a.getMinDamage() + "-" + a.getMaxDamage()));
+		statsA.add(new JLabel("Magic Damage: " + a.getMagicDamage()));
 		statsA.add(new JLabel("Critical Damage: " + a.getCriticalDamage()));
-		statsA.add(new JLabel("Critical Change: " + a.getCriticalChance()));
+		statsA.add(new JLabel("Critical Chance: " + a.getCriticalChance() * 100 + "%"));
+		statsA.add(new JLabel("Nerve: " + a.getNerve() * 100 + "%"));
 		statsA.add(new JLabel("Accuracy: " + a.getAccuracy() * 100 + " %"));
+		statsA.add(new JLabel("Magic Accuracy: " + a.getMagicAccuracy() * 100 + "%"));
 		statsA.add(new JLabel("Resistance: " + a.getResistance() * 100 + "%"));
 		
 		//Add stats of B
