@@ -48,6 +48,9 @@ public class Battle extends JFrame implements ActionListener{
 	//Message label
 	private JLabel msg;
 	
+	//Buttons panel
+	private JPanel buttons;
+	
 	//Battle between player and monster
 	public Battle(Player a, Monster b)
 	{
@@ -94,6 +97,10 @@ public class Battle extends JFrame implements ActionListener{
 		//Update statistics
 		updateStats();
 		
+		//Buttons panel
+		buttons = new JPanel();
+		buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
+		
 		//Message panel
 		bottom = new JPanel();
 		bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
@@ -105,6 +112,7 @@ public class Battle extends JFrame implements ActionListener{
 		
 		panel.add(statsA, BorderLayout.WEST);
 		panel.add(statsB, BorderLayout.EAST);
+		panel.add(buttons, BorderLayout.CENTER);
 		panel.add(bottom, BorderLayout.SOUTH);
 		
 		this.getContentPane().add(panel);
